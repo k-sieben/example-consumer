@@ -47,17 +47,15 @@ describe('API Pact test', () => {
             'Content-Type': 'application/json',
           },
           body: {
-            query: `
-query {
-  factSheet(id: "0241e931-9831-413a-9347-6569f0d5fc83") {
-    id
-    name
-    displayName
-    description
-    type
-  }
-}
-            `,
+            query: 'query {' +
+              'factSheet(id: "0241e931-9831-413a-9347-6569f0d5fc83") {' +
+                'id' +
+                'name' +
+                'displayName' +
+                'description' +
+                'type' +
+              '}' +
+            '}',
           },
         })
         .willRespondWith({
