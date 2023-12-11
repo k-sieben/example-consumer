@@ -36,14 +36,43 @@ export class API {
       .then((r) => r.data.map((p) => new Product(p)));
   }
 
-  async getProduct(id) {
-    return axios
-      .get(this.withPath('/product/' + id), {
-        headers: {
-          Authorization: this.generateAuthToken()
+  async getFactSheet(id) {
+    const query = `
+      query {
+        factSheet(id: "${id}") {
+          id
+          name
+          displayName
+          description
+          type
         }
-      })
-      .then((r) => new Product(r.data));
+      }
+    `;
+
+    try {
+      const response = await axios.post(
+        this.url,
+        {
+          query,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      throw new Error(`GraphQL request failed: ${error.message}`);
+    }
+    // return axios
+    //   .get(this.withPath('/product/' + id), {
+    //     headers: {
+    //       Authorization: this.generateAuthToken()
+    //     }
+    //   })
+    //   .then((r) => new Product(r.data));
   }
 }
 
