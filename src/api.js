@@ -56,7 +56,7 @@ export class API {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((r) => new FactSheet(r.data));
+      }).then((r) => new FactSheet(r.data.data.factSheet));
   }
 }
 
