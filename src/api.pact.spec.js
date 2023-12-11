@@ -79,10 +79,10 @@ describe('API Pact test', () => {
       return mockProvider.executeTest(async (mockserver) => {
         // Act
         const api = new API(mockserver.url);
-        const factSheet = await api.getFactSheet('0241e931-9831-413a-9347-6569f0d5fc83');
+        const response = await api.getFactSheet('0241e931-9831-413a-9347-6569f0d5fc83');
 
         // Assert - did we get the expected response
-        expect(factSheet).toStrictEqual(new FactSheet(expectedFactSheet));
+        expect(response.data.factSheet).toStrictEqual(new FactSheet(expectedFactSheet));
         return;
       });
     });
