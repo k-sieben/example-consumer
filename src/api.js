@@ -37,15 +37,7 @@ export class API {
   }
 
   async getFactSheet(id) {
-    const query = 'query {' +
-      `factSheet(id: "${id}") {` +
-      'id\n' +
-      'name\n' +
-      'displayName\n' +
-      'description\n' +
-      'type\n' +
-      '}' +
-      '}';
+    const query = `query {factSheet(id: "${id}") { id name displayName description type } }`;
 
     return axios.post(
       this.withPath('/graphql'),
