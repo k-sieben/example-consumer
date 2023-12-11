@@ -1,7 +1,7 @@
 import { PactV3 } from '@pact-foundation/pact';
 import { API } from './api';
 import { MatchersV3 } from '@pact-foundation/pact';
-import { Product } from './product';
+import { FactSheet } from './factSheet';
 const { eachLike, like } = MatchersV3;
 const Pact = PactV3;
 
@@ -17,77 +17,77 @@ describe('API Pact test', () => {
     test('ID 0241e931 exists', async () => {
       // Arrange
 
-      const expectedResponse =
-      {
+      const expectedFactSheet = {
+        id: '0241e931-9831-413a-9347-6569f0d5fc83',
+        name: 'DOORS',
+        displayName: 'DOORS',
+        description: 'Description',
+        type: 'Application',
+      };
+
+      const expectedResponse = {
         data: {
-          factSheet: {
-            id: '0241e931-9831-413a-9347-6569f0d5fc83',
-            name: 'DOORS',
-            displayName: 'DOORS',
-            description: 'Description',
-            type: 'Application',
-          },
+          factSheet: expectedFactSheet
         },
-      }
+      };
 
-        // Uncomment to see this fail
-        // const expectedProduct = { id: '10', type: 'CREDIT_CARD', name: '28 Degrees', price: 30.0, newField: 22}
+      // Uncomment to see this fail
+      // const expectedProduct = { id: '10', type: 'CREDIT_CARD', name: '28 Degrees', price: 30.0, newField: 22}
 
-        mockProvider
+      mockProvider
         .given('a factsheet with ID 0241e931-9831-413a-9347-6569f0d5fc83 exists')
-          .uponReceiving('a request to get a factsheet')
-          .withRequest({
-            method: 'POST',
-            path: '/graphql',
-            // headers: {
-            //   Authorization: like('Bearer 2019-01-14T11:34:18.045Z')
-            // }
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: {
-              query: `
-              query {
-                factSheet(id: "0241e931-9831-413a-9347-6569f0d5fc83") {
-                  id
-                  name
-                  displayName
-                  description
-                  type
-                }
-              }
+        .uponReceiving('a request to get a factsheet')
+        .withRequest({
+          method: 'POST',
+          path: '/graphql',
+          // headers: {
+          //   Authorization: like('Bearer 2019-01-14T11:34:18.045Z')
+          // }
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: {
+            query: `
+query {
+  factSheet(id: "0241e931-9831-413a-9347-6569f0d5fc83") {
+    id
+    name
+    displayName
+    description
+    type
+  }
+}
             `,
-            },
-          })
-          .willRespondWith({
-            status: 200,
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: like(expectedResponse),
-            // body: {
-            //   data: {
-            //     factSheet: {
-            //       id: '0241e931-9831-413a-9347-6569f0d5fc83',
-            //       name: 'DOORS',
-            //       displayName: 'DOORS',
-            //       description: 'Description',
-            //       type: 'Application',
-            //     },
-            //   },
-            // },
-          });
-        return mockProvider.executeTest(async (mockserver) => {
-          // Act
-          const api = new API(mockserver.url);
-          const factSheet = await api.getFactSheet('0241e931-9831-413a-9347-6569f0d5fc83');
-
-          // Assert - did we get the expected response
-          // expect(product).toStrictEqual(new Product(expectedProduct));
-          // return;
-          return new Verifier().verifyInteraction(interaction);
+          },
+        })
+        .willRespondWith({
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: like(expectedResponse),
+          // body: {
+          //   data: {
+          //     factSheet: {
+          //       id: '0241e931-9831-413a-9347-6569f0d5fc83',
+          //       name: 'DOORS',
+          //       displayName: 'DOORS',
+          //       description: 'Description',
+          //       type: 'Application',
+          //     },
+          //   },
+          // },
         });
+      return mockProvider.executeTest(async (mockserver) => {
+        // Act
+        const api = new API(mockserver.url);
+        const factSheet = await api.getFactSheet('0241e931-9831-413a-9347-6569f0d5fc83');
+
+        // Assert - did we get the expected response
+        expect(factSheet).toStrictEqual(new FactSheet(expectedProduct));
+        return;
       });
+    });
 
     // test('product does not exist', async () => {
     //   // set up Pact interactions

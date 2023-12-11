@@ -1,6 +1,6 @@
 const axios = require('axios').default;
 const adapter = require('axios/lib/adapters/http');
-import { Product } from './product';
+import { FactSheet } from './factSheet';
 
 axios.defaults.adapter = adapter;
 
@@ -33,20 +33,20 @@ export class API {
           Authorization: this.generateAuthToken()
         }
       })
-      .then((r) => r.data.map((p) => new Product(p)));
+      .then((r) => r.data.map((p) => new FactSheet(p)));
   }
 
   async getFactSheet(id) {
     const query = `
-      query {
-        factSheet(id: "${id}") {
-          id
-          name
-          displayName
-          description
-          type
-        }
-      }
+query {
+  factSheet(id: "${id}") {
+    id
+    name
+    displayName
+    description
+    type
+  }
+}
     `;
 
     try {
