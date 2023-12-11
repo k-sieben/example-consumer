@@ -51,7 +51,7 @@ export class API {
 
     try {
       const response = await axios.post(
-        this.withPath('/graphql/'),
+        this.withPath('/graphql'),
         {
           query,
         },
