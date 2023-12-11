@@ -49,11 +49,11 @@ describe('API Pact test', () => {
           body: {
             query: 'query {' +
               'factSheet(id: "0241e931-9831-413a-9347-6569f0d5fc83") {' +
-                'id' +
-                'name' +
-                'displayName' +
-                'description' +
-                'type' +
+                'id\n' +
+                'name\n' +
+                'displayName\n' +
+                'description\n' +
+                'type\n' +
               '}' +
             '}',
           },
