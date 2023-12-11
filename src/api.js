@@ -38,39 +38,25 @@ export class API {
 
   async getFactSheet(id) {
     const query = 'query {' +
-        `factSheet(id: "${id}") {`+
-          'id' +
-          'name' +
-          'displayName' +
-          'description' +
-          'type' +
-        '}' +
+      `factSheet(id: "${id}") {` +
+      'id' +
+      'name' +
+      'displayName' +
+      'description' +
+      'type' +
+      '}' +
       '}';
 
-    try {
-      const response = await axios.post(
-        this.withPath('/graphql'),
-        {
-          query,
+    return axios.post(
+      this.withPath('/graphql'),
+      {
+        query,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-
-      return response.data;
-    } catch (error) {
-      throw new Error(`GraphQL request failed: ${error.message}`);
-    }
-    // return axios
-    //   .get(this.withPath('/product/' + id), {
-    //     headers: {
-    //       Authorization: this.generateAuthToken()
-    //     }
-    //   })
-    //   .then((r) => new Product(r.data));
+      }).then((r) => new FactSheet(r.data));
   }
 }
 
