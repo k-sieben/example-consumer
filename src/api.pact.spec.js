@@ -18,10 +18,10 @@ describe('API Pact test', () => {
       // Arrange
 
       const expectedFactSheet = {
-        id: '0241e931-9831-413a-9347-6569f0d5fc83',
-        name: 'DOORS',
-        displayName: 'DOORS',
-        description: 'Description',
+        id: 'cbf30e3e-7c3d-4be8-921f-534ad8e6887e',
+        name: 'ALM-DNG',
+        displayName: 'ALM-DNG',
+        description: 'Rational DOORS Next Generation is used for defining and managing requirements for any size development or project team. The tool also provides requirements engineering for complex systems.',
         type: 'Application',
       };
 
@@ -32,16 +32,17 @@ describe('API Pact test', () => {
       };
 
       mockProvider
-        .given('a factsheet with ID 0241e931-9831-413a-9347-6569f0d5fc83 exists')
+        .given('a factsheet with ID cbf30e3e-7c3d-4be8-921f-534ad8e6887e exists')
         .uponReceiving('a request to get a factsheet')
         .withRequest({
           method: 'POST',
           path: '/graphql',
           headers: {
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           body: {
-            query: 'query { factSheet(id: "0241e931-9831-413a-9347-6569f0d5fc83") { id name displayName description type } }',
+            query: 'query { factSheet(id: "cbf30e3e-7c3d-4be8-921f-534ad8e6887e") { id name displayName description type } }',
           },
         })
         .willRespondWith({
@@ -54,7 +55,7 @@ describe('API Pact test', () => {
       return mockProvider.executeTest(async (mockserver) => {
         // Act
         const api = new API(mockserver.url);
-        const factSheet = await api.getFactSheet('0241e931-9831-413a-9347-6569f0d5fc83');
+        const factSheet = await api.getFactSheet('cbf30e3e-7c3d-4be8-921f-534ad8e6887e');
 
         // Assert - did we get the expected response
         expect(factSheet).toStrictEqual(new FactSheet(expectedFactSheet));
