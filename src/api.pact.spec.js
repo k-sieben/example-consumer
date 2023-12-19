@@ -9,7 +9,7 @@ const mockProvider = new Pact({
   consumer: 'pactflow-leanix-consumer',
   provider: process.env.PACT_PROVIDER
     ? process.env.PACT_PROVIDER
-    : 'pactflow-example-provider'
+    : 'pact-leanix-graphql-provider'
 });
 
 describe('API Pact test', () => {
